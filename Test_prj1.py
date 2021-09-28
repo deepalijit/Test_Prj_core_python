@@ -185,7 +185,7 @@ while True:
                     elif op3==2:
                         for i in student_list:
                             if i.get_rn()==rnu:
-                                i.set_marks(input('Enter new Marks: '))
+                                i.set_marks(float(input('Enter new Marks: ')))
                                 print(f'Roll No:{i.get_rn()},Name:{i.get_name()},Marks:{i.get_marks()},City:{i.address.get_city()},Pin:{i.address.get_pin()}')
                                 print()
                             
