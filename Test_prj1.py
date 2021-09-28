@@ -1,3 +1,4 @@
+from operator import attrgetter
 
 #Address Class
 class Address():
@@ -18,24 +19,27 @@ class Address():
 class Student():
     def set_rn(self,rn):
         self.rn = rn
+        
     def set_name(self,name):
         self.name = name
+        
     def set_marks(self,marks):
         self.marks = marks
+        
     def set_address(self,address):
         self.address = address
 
     def get_rn(self):
         return self.rn
+    
     def get_name(self):
         return self.name
+    
     def get_marks(self):
         return self.marks
+    
     def get_address(self):
         return self.address
-
-##    def __str__(self):
-##        return f'{self.rn},{self.name},{self.marks},{self.address}'
 
 class EmptyListError(Exception):
     def __init__(self,msg):
@@ -46,12 +50,10 @@ student_list = []
 a1=Address()
 a1.set_city('Pune')
 a1.set_pin(1)
-#print(a1.get_city(),a1.get_pin())
 
 a2=Address()
 a2.set_city('Mumbai')
 a2.set_pin(2)
-#print(a2.get_city(),a2.get_pin())
    
 address_list = [a1,a2]
 #address_list = []
@@ -83,12 +85,7 @@ while True:
                     a.set_pin(pin1)
                     address_list.append(a)
                     print('record created')
-                    print(a.get_city())
-                    print(a.get_pin())
-                    print()
-                print(len(address_list))
-                print(address_list)
-
+                print()
 
             if op1 == 2:
                 cu = input("Enter city of wchich pin you want to update: ")
@@ -97,16 +94,11 @@ while True:
                         i.set_pin(int(input('Enter new pin: ')))
 
                 print()
-            
 
             elif op1 == 3:
                 cd = input('Enter name of city you want to delete: ')
-                #print(cd)
-                #cd.capitalize()
                 for i in address_list:
-                    #print('test1')
                     if i.get_city()==cd:
-                        #print('test2')
                         address_list.remove(i)
                 print()
 
@@ -114,7 +106,6 @@ while True:
                 for i in address_list:
                     print(i.get_city(),i.get_pin())
                     print()
-
 
             elif op1 == 5:
                 break
@@ -153,25 +144,86 @@ while True:
                                 if addr.get_pin() == p1:
                                     #print('inside if')
                                     s.set_address(addr)
-                            print(type(s.get_rn()))
                             s.get_name()
                             s.get_marks()
                             
                             student_list.append(s)
-                            print(s.rn)
-                            print(s.name)
-                            print(s.marks)
-                            print(student_list)
-                            print(s.address)
+##                            print(s.rn)
+##                            print(s.name)
+##                            print(s.marks)
+##                            print(student_list)
+##                            print(s.address)
                             #print(s.get_rn(),s.get_name(),s.get_marks())
                         break
                     except EmptyListError as e:
                         print(e)
                         break
 
-            if op2 == 4:
+            elif op2 == 2:
+                print('''options to update the student-->
+
+                        1. Update the name.
+                        2. Updaet marks
+                        3. Update address
+                        5. Exit ''')
+                rnu = int(input('Enter the roll no of student to update record: '))
+                
+                for i in student_list:
+                    if i.get_rn()==rnu:
+                        print(f'Roll No:{i.get_rn()},Name:{i.get_name()},Marks:{i.get_marks()},City:{i.address.get_city()},Pin:{i.address.get_pin()}')
+
+                while True:
+                    op3 = int(input('Enter the option to update student: '))
+                    
+                    if op3==1:
+                        for i in student_list:
+                            if i.get_rn()==rnu:
+                                i.set_name(input('Enter new Name: '))
+                                print(f'Roll No:{i.get_rn()},Name:{i.get_name()},Marks:{i.get_marks()},City:{i.address.get_city()},Pin:{i.address.get_pin()}')
+                                print()
+                                
+                    elif op3==2:
+                        for i in student_list:
+                            if i.get_rn()==rnu:
+                                i.set_marks(input('Enter new Marks: '))
+                                print(f'Roll No:{i.get_rn()},Name:{i.get_name()},Marks:{i.get_marks()},City:{i.address.get_city()},Pin:{i.address.get_pin()}')
+                                print()
+                            
+                    elif op3==3:
+                        print('address options available')
+                        for i in address_list:
+                            print(f'city:{i.get_city()},pin:{i.get_pin()}')
+                        p1 = int(input('Enter pin of city: '))
+                        for i in student_list:
+                            if i.get_rn()==rnu:
+                                 for j in address_list:
+                                     if j.get_pin()==p1:
+                                         i.set_address(j)
+                                         print(f'Roll No:{i.get_rn()},Name:{i.get_name()},Marks:{i.get_marks()},City:{i.address.get_city()},Pin:{i.address.get_pin()}')
+                            
+                            
+
+                    elif op3==5:
+                        break
+            
+
+            elif op2 == 3:
+                sd = int(input("Enter roll no of a student who's record you want to delete: "))
+                for i in student_list:
+                    if i.get_rn() == sd:
+                        student_list.remove(i)
+                print()
+                
+            elif op2 == 4:
                 for i in student_list:
                     print(i.get_rn(),i.get_name(),i.get_marks(),i.address.city)
+                print('records in descending order')
+                l = student_list
+                l.sort(key=attrgetter('marks'),reverse=True)
+                for j in l:
+                    print(j.get_rn(),j.get_name(),j.get_marks(),j.address.city)
+                print()
+                
             elif op2 == 5:
                 break
 
